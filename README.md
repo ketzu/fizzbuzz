@@ -1,4 +1,4 @@
-# FizzBuzz API
+# FABI: A FizzBuzz JSON API
 
 Do you think modulo is an unfair burden to your CPU?
 Do you prefer JSON APIs over complicated thinking?
