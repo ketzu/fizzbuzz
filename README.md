@@ -14,9 +14,9 @@ Call `/to.php?fb=15` or (you know when) `/to/15` to receive a JSON response of a
 
 Try it on fizzbuzz.ketzu.net!
 
-[Exact 15](fizzbuzz.ketzu.net/15). [Exact 100](fizzbuzz.ketzu.net/100).
+[Exact 15](http://fizzbuzz.ketzu.net/15). [Exact 100](http://fizzbuzz.ketzu.net/100).
 
-[To 15](fizzbuzz.ketzu.net/to/15). [To 100](fizzbuzz.ketzu.net/to/100).
+[To 15](http://fizzbuzz.ketzu.net/to/15). [To 100](http://fizzbuzz.ketzu.net/to/100).
 
 ### Example Responses
 
