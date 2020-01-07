@@ -1,0 +1,7 @@
+RewriteEngine on
+
+RewriteRule ^/?to/([0-9]+)$ /to.php?fb=$1 [NC,L]
+RewriteRule ^/?([0-9]+)$ /exact.php?fb=$1 [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /404.php [NC,L]
