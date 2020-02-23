@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: "FABI: A FizzBuzz API"
+  description: Returns FizzBuzz Values in JSON Format.
+  version: "1.0"
+servers:
+  - url: 'http://fizzbuzz.ketzu.net'
+paths:
+  /to/{targetNumber}:
+    get:
+      description: Get all FizzBuzz Values up to (including) targetNumber
+      parameters:
+        - in: path
+          name: targetNumber
+          schema:
+            type: integer
+          required: true
+          description: Maximum Number to include in the reqeuested FizzBuzz list
+      responses:
+        '200':
+          description: JSON Array of Numbers and Strings of either "Fizz", "Buzz" or "FizzBuzz"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: object
+                properties: {}
+      servers:
+        - url: 'http://fizzbuzz.ketzu.net'
+    servers:
+      - url: 'http://fizzbuzz.ketzu.net'
+  /{targetNumber}:
+    get:
+      description: Get the FizzBuzz Values of targetNumber
+      parameters:
+        - in: path
+          name: targetNumber
+          schema:
+            type: integer
+          required: true
+          description: Number to determin the FizzBuzz value of
+      responses:
+        '200':
+          description: Single Value String "Fizz", "Buzz", "FizzBuzz" or Number
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                '0':
+                  value: '"23"'
+      servers:
+        - url: 'http://fizzbuzz.ketzu.net'
+    servers:
+      - url: 'http://fizzbuzz.ketzu.net'
