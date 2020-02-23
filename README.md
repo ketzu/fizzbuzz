@@ -51,7 +51,7 @@ The benchmark also contains a distribution of the response times:
 
 You can find the FABI example API on [swaggerhub](https://app.swaggerhub.com/apis/ketzu/FABI/1.0).
 
-The created description, that can be amended easily for your own version is included in our [openabi.yml](openabi.yml).
+The created description, that can be amended easily for your own version is included in our [openapi.yml](openapi.yml).
 
 ```yaml
 openapi: 3.0.1
