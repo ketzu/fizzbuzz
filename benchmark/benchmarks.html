@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Api Benchmark :: report</title>
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/excanvas.min.js"></script><![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/jquery.jqplot.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.highlighter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.cursor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/jquery.jqplot.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/dark.min.css" type="text/css" />
+
+    <style type="text/css">
+      .jqplot-target {
+        color: #F1F1F1;
+      }
+      table.jqplot-table-legend, table.jqplot-cursor-legend {
+        background-color: rgba(101, 0, 253, 0.89)
+      }
+
+      body {
+        background: #3D3D3D;
+        color: #F1F1F1;
+      }
+
+      a {
+        color: #6699FF;
+      }
+
+      #report-details, #charts {
+        width: 100%;
+        float: left;
+        font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+      }
+
+      #report-details {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .buttons {
+        width: 100%;
+        border-bottom: 1px solid rgb(75, 72, 72);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        text-align: right;
+      }
+
+      .button {
+        margin-right: 10px;
+        padding: 6px;
+        text-decoration: none;
+      }
+
+      .button.selected {
+        background-color: rgb(56, 56, 56);
+      }
+
+      .chart {
+        width: 60%;
+        height: 450px;
+        float: left;
+      }
+
+      .distchart {
+        width: 96%;
+        height: 450px;
+        float: left;
+      }
+
+      .panel {
+        height: 450px;
+        overflow-y: auto;
+      }
+
+      .route {
+        width: 90%;
+        margin: 3%;
+        padding: 2%;
+        float: left;
+        background-color: #000000;
+        border-radius: 15px;
+      }
+      .stats-details {
+        font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+        font-size: 15px;
+        float: left;
+        width: 36%;
+        padding: 2%;
+      }
+
+      .green {
+        color: green;
+      }
+
+      .red {
+        color: red;
+      }
+
+      .hide {
+        display:none;
+      }
+
+      pre code {
+        overflow-x: auto;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script><!--
+    var data={"benchmark":{"fizzbuzz.ketzu.net":{"15":{"name":"fizzbuzz.ketzu.net/15","href":"http://fizzbuzz.ketzu.net/15","stats":{"sample":[0.1148633,0.050574201,0.0504686,0.0451667,0.046962199,0.051394399,0.050685999,0.0781698,0.0483888,0.050717599,0.0509804,0.061800001,0.0461975,0.0490839,0.0505364,0.045735099,0.049271901,0.046682399,0.044343199,0.0473161],"mean":0.0539669248,"singleMean":0.0539669248,"variance":0.0002604966065843847,"deviation":0.016139907266907845,"sem":0.003608992979934878,"moe":0.0075536223070037,"rme":13.99676252630148,"p75":0.05091469975,"p95":0.11302862499999997,"p99":0.1148633,"p999":0.1148633},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:43.879Z","end":"2020-02-23T11:54:44.959Z"},"hz":18.529868131378127},"1000":{"name":"fizzbuzz.ketzu.net/1000","href":"http://fizzbuzz.ketzu.net/1000","stats":{"sample":[0.0448929,0.050864601,0.0484574,0.0520695,0.0476916,0.051878101,0.0479892,0.046707799,0.0445056,0.0476743,0.0455029,0.047917201,0.049062001,0.051472199,0.047874901,0.047941,0.0471522,0.047993901,0.047742401,0.0567328],"mean":0.04860612525000001,"singleMean":0.04860612525000001,"variance":0.000008047176303287253,"deviation":0.0028367545370171264,"sem":0.0006343175980251238,"moe":0.001327626732666584,"rme":2.731397999404579,"p75":0.050413951,"p95":0.056499635,"p99":0.0567328,"p999":0.0567328},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:44.960Z","end":"2020-02-23T11:54:45.932Z"},"hz":20.573538722879373},"1001":{"name":"fizzbuzz.ketzu.net/1001","href":"http://fizzbuzz.ketzu.net/1001","stats":{"sample":[0.0474527,0.0478013,0.0456692,0.0488799,0.0448328,0.0457266,0.0481092,0.0478477,0.0518134,0.0528394,0.050089299,0.0474777,0.0460457,0.0467781,0.069704499,0.0468222,0.047005901,0.0460141,0.0481071,0.0487324],"mean":0.04888745995,"singleMean":0.04888745995,"variance":0.000027994384253006475,"deviation":0.005290971957306755,"sem":0.0011830972963583018,"moe":0.0024762226412779254,"rme":5.065148902828046,"p75":0.048843025,"p95":0.06886124404999999,"p99":0.069704499,"p999":0.069704499},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:45.933Z","end":"2020-02-23T11:54:46.911Z"},"hz":20.45514332351808},"1002":{"name":"fizzbuzz.ketzu.net/1002","href":"http://fizzbuzz.ketzu.net/1002","stats":{"sample":[0.0535989,0.0461455,0.0480373,0.0499683,0.046896999,0.047079899,0.0463544,0.0459963,0.047993,0.048733999,0.0461451,0.046272,0.0453725,0.0473166,0.0500911,0.046347099,0.0731397,0.0480996,0.0531973,0.0458032],"mean":0.049129439800000015,"singleMean":0.049129439800000015,"variance":0.00003722258318776438,"deviation":0.006101031321650822,"sem":0.001364232076806662,"moe":0.0028553377367563438,"rme":5.8118670768078715,"p75":0.04965972475,"p95":0.07216265999999999,"p99":0.0731397,"p999":0.0731397},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:46.911Z","end":"2020-02-23T11:54:47.894Z"},"hz":20.354394515200635},"100000":{"name":"fizzbuzz.ketzu.net/100000","href":"http://fizzbuzz.ketzu.net/100000","stats":{"sample":[0.0477355,0.0470063,0.049149401,0.052819701,0.0459759,0.048009701,0.0461118,0.0521462,0.0505715,0.0475572,0.0455179,0.0434469,0.0450228,0.0472476,0.045479299,0.0476859,0.0451663,0.046009599,0.0441358,0.048327299],"mean":0.04725613,"singleMean":0.04725613,"variance":0.000006105678818273997,"deviation":0.0024709671827594145,"sem":0.0005525250590821197,"moe":0.0011564349486588765,"rme":2.4471638889153144,"p75":0.0482478995,"p95":0.052786025949999996,"p99":0.052819701,"p999":0.052819701},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:47.894Z","end":"2020-02-23T11:54:48.839Z"},"hz":21.161275796388743},"to/15":{"name":"fizzbuzz.ketzu.net/to/15","href":"http://fizzbuzz.ketzu.net/to/15","stats":{"sample":[0.051126401,0.047084099,0.0508858,0.0490138,0.0496462,0.0522968,0.046029201,0.0479743,0.046882101,0.0476877,0.0498781,0.047669,0.047414199,0.044876899,0.0470905,0.047126899,0.0461602,0.044479199,0.046648401,0.057397799],"mean":0.0483683799,"singleMean":0.0483683799,"variance":0.000008679410882080519,"deviation":0.00294608399100917,"sem":0.0006587644071320383,"moe":0.0013787939041273562,"rme":2.8506100617344767,"p75":0.049820125,"p95":0.05714274905,"p99":0.057397799,"p999":0.057397799},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:48.840Z","end":"2020-02-23T11:54:49.807Z"},"hz":20.674663945070446},"to/1000":{"name":"fizzbuzz.ketzu.net/to/1000","href":"http://fizzbuzz.ketzu.net/to/1000","stats":{"sample":[0.0488034,0.057634201,0.048974199,0.0489718,0.0463669,0.046636799,0.052231399,0.0492096,0.0484279,0.049075599,0.0450531,0.049697201,0.0478528,0.048538801,0.051624399,0.049535501,0.047632701,0.0464673,0.047042401,0.048651399],"mean":0.048921370000000006,"singleMean":0.048921370000000006,"variance":0.000007095137405053267,"deviation":0.0026636699129308924,"sem":0.0005956146994934421,"moe":0.0012466215660397741,"rme":2.548214749586477,"p75":0.049454025750000005,"p95":0.0573640609,"p99":0.057634201,"p999":0.057634201},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:49.807Z","end":"2020-02-23T11:54:50.786Z"},"hz":20.440964756301792},"to/100000":{"name":"fizzbuzz.ketzu.net/to/100000","href":"http://fizzbuzz.ketzu.net/to/100000","stats":{"sample":[0.199189099,0.1609879,0.1627587,0.1447952,0.190912801,0.191464699,0.2270447,0.1491158,0.1943801,0.161905999,0.168476499,0.1301332,0.141862299,0.157379501,0.134433,0.182740701,0.132397099,0.1569334,0.192947101,0.1757468],"mean":0.16778022990000002,"singleMean":0.16778022990000002,"variance":0.0006781556225890382,"deviation":0.026041421285886802,"sem":0.005823038822595287,"moe":0.012187620255691936,"rme":7.264038357174724,"p75":0.1913267245,"p95":0.22565191994999997,"p99":0.2270447,"p999":0.2270447},"errors":{},"options":{"method":"get","concurrencyLevel":1,"start":"2020-02-23T11:54:50.786Z","end":"2020-02-23T11:54:54.142Z"},"hz":5.9601777908876254}}},"info":{"date":"2020-02-23T11:54:54.144Z","apiName":"fizzbuzz.ketzu.net"}};
+    // --></script>
+    <div id="report">
+      <div id="report-details"><h1>Api Benchmark report</h1></div>
+      <div id="charts"></div>
+    </div>
+    <div style="text-align: center">
+    Generated by <a href="https://github.com/matteofigus/api-benchmark" target="_blank">api-benchmark</a><br /><br />
+    <iframe src="http://ghbtns.com/github-btn.html?user=matteofigus&repo=api-benchmark&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+    </div>
+    <script>
+
+      var selectors = {
+        charts: '#charts',
+        reportDetails: '#report-details',
+        panel: '.panel',
+        panels: {
+          stats: '.stats',
+          distribution: '.distribution',
+          response: '.response',
+          request: '.request'
+        },
+        button: '.button',
+        buttons: {
+          stats: '.button-stats',
+          distribution: '.button-distribution',
+          response: '.button-response',
+          request: '.button-request'
+        }
+      };
+
+      var formatNumber = function(number) {
+        number = String(number).split('.');
+        return number[0].replace(/(?=(?:\d{3})+$)(?!\b)/g, ',') +
+          (number[1] ? '.' + number[1] : '');
+      };
+
+      var formatDate = function(date){
+        return date.replace(/T/g, ' ').replace(/Z/g, ' ');
+      };
+
+      var fixNumber = function(number, digits){
+        return formatNumber(number.toFixed(digits));
+      };
+
+      var decodeHtml = function(text){
+        return $('<div/>').text(text).html();
+      };
+
+      var templates = {
+        reportDetails: function(info){
+          var formattedDate = formatDate(info.date);
+          return 'Benchmarked ' + info.apiName + ' on ' + formattedDate;
+        },
+        route: function(routeData, i){
+          var errorsCount = 0,
+              errorsDesc = '(',
+              duration = (new Date(routeData.options.end) - new Date(routeData.options.start))/1e3;
+
+          for(var errorType in routeData.errors){
+            errorsCount += routeData.errors[errorType].length;
+            errorsDesc += routeData.errors[errorType].length + ' ' + errorType + ',';
+          }
+
+          if(errorsCount == 0)
+            errorsDesc = '';
+          else
+            errorsDesc = errorsDesc.substr(0, errorsDesc.length - 1) + ')';
+
+          var template = '<div class="route"><div class="buttons">' +
+            '<a href="#stats" class="button button-stats selected">Stats</a>' +
+            '<a href="#distribution" class="button button-distribution">Distribution</a>' +
+            '</div><div class="stats panel"><div class="chart" id="chart' + i + '"></div>' +
+            '<div class="stats-details"><ul><li>' + routeData.stats.sample.length + ' run' +
+            (routeData.stats.sample.length > 1 ? 's' : '') + ' sampled with concurrency: ' +
+            routeData.options.concurrencyLevel + '</li>';
+
+          if(routeData.options.expectedStatusCode)
+            template += '<li>Expected status code: ' + routeData.options.expectedStatusCode + '</li>';
+
+          if(routeData.options.maxMean)
+            template += '<li>Expected max mean: ' + routeData.options.maxMean + '</li>';
+
+          if(routeData.options.maxSingleMean)
+            template += '<li>(*) Expected max mean across all concurrent requests: ' + routeData.options.maxSingleMean + '</li>';
+
+          template += '</ul><ul><li>Started: ' + formatDate(routeData.options.start) + '</li>' +
+            '<li>Ended: ' + formatDate(routeData.options.end) + ' (' + duration + ' seconds)</li>' +
+            '<li>' + fixNumber(routeData.hz, 2) + ' ops/sec \xb1 ' + fixNumber(routeData.stats.rme, 2) + '%</li>' +
+
+            '<li class="' + (!errorsCount ? 'green' : 'red') + '">' + errorsCount + ' error' +
+            (errorsCount == 1 ? '' : 's') + ' ' + errorsDesc + '</li>' +
+
+            '<li>Sample arithmetic mean: ' + fixNumber(routeData.stats.mean, 6) + '</li>';
+
+          if(routeData.options.concurrencyLevel > 1)
+            template += '<li>Mean across all the concurrent requests: ' + fixNumber(routeData.stats.singleMean, 6) + '</li>';
+
+          template += '<li>Sample standard deviation: ' + fixNumber(routeData.stats.deviation, 6) + '</li>' +
+            '<li>Margin of error: ' + fixNumber(routeData.stats.moe, 6) + '</li>' +
+            '<li>The standard error of the mean: ' + fixNumber(routeData.stats.sem, 6) + '</li>' +
+            '<li>The sample variance: ' + fixNumber(routeData.stats.variance, 6) + '</li>' +
+            '</ul><ul><li>75% Percentile: ' + fixNumber(routeData.stats.p75, 6) + '</li>' +
+            '<li>95% Percentile: ' + fixNumber(routeData.stats.p95, 6) + '</li>' +
+            '<li>99% Percentile: ' + fixNumber(routeData.stats.p99, 6) + '</li>' +
+            '<li>99.9% Percentile: ' + fixNumber(routeData.stats.p999, 6) + '</li>' +
+            '</ul></div></div><div class="distribution panel"><div class="distchart" id="distchart' + i + '">' +
+            '</div></div>';
+          return template;
+        }
+      };
+
+      var bindButtons = function(){
+        var bindButton = function(panelName){
+          $(selectors.buttons[panelName]).click(function(){
+            var $sender = $(this),
+                $panelsContainer = $sender.parent().parent();
+
+            $panelsContainer.find(selectors.button).removeClass('selected');
+            $sender.addClass('selected');
+
+            $panelsContainer.find(selectors.panel).addClass('hide');
+            $panelsContainer.find(selectors.panels[panelName]).removeClass('hide');
+
+            return false;
+          });
+        };
+
+        bindButton('stats');
+        bindButton('distribution');
+      };
+
+      $(function(){
+        $(selectors.reportDetails).append(templates.reportDetails(data.info));
+
+        var counter = 0;
+        for(serviceName in data.benchmark){
+          for(routeName in data.benchmark[serviceName]){
+            $(selectors.charts).append(templates.route(data.benchmark[serviceName][routeName], counter));
+
+            var samples = data.benchmark[serviceName][routeName]['stats']['sample'],
+                meanArray = [],
+                mean = data.benchmark[serviceName][routeName]['stats']['mean'],
+                singleMeanArray = [],
+                singleMean = data.benchmark[serviceName][routeName]['stats']['singleMean'],
+                maxMeanArray = [],
+                maxMean = data.benchmark[serviceName][routeName].options.maxMean !== undefined,
+                maxSingleMeanArray = [],
+                maxSingleMean = data.benchmark[serviceName][routeName].options.maxSingleMean !== undefined,
+                errorsArray = [],
+                areThereSomeErrors = false;
+
+            for(var i = 0; i < samples.length; i++){
+              meanArray.push(mean);
+              singleMeanArray.push(singleMean);
+
+              errorsArray.push(null);
+
+              if(maxMean)
+                maxMeanArray.push(data.benchmark[serviceName][routeName].options.maxMean);
+
+              if(maxSingleMean)
+                maxSingleMeanArray.push(data.benchmark[serviceName][routeName].options.maxSingleMean);
+            }
+
+            for(var errorType in data.benchmark[serviceName][routeName].errors){
+              var errorsOfType = data.benchmark[serviceName][routeName]['errors'][errorType];
+              for(var i = 0; i < errorsOfType.length; i++){
+                if(errorsOfType[i].pos !== undefined){
+                  errorsArray[errorsOfType[i].pos] = data.benchmark[serviceName][routeName]['stats']['sample'][errorsOfType[i].pos];
+                  areThereSomeErrors = true;
+                }
+              }
+            }
+
+            var getSeriesOptions = function(label, color){
+              return {
+                showMarker: false,
+                pointLabels: { show: true },
+                label: label,
+                color: color
+              };
+            };
+
+            var lines = [samples],
+                series = [getSeriesOptions('Samples', '#6699FF')];
+
+            if(maxMean){
+              lines.push(maxMeanArray);
+              series.push(getSeriesOptions('Max Mean', '#F90'));
+            }
+
+            lines.push(meanArray);
+            series.push(getSeriesOptions('Mean', '#66FF00'));
+
+            if(maxSingleMean){
+              lines.push(maxSingleMeanArray);
+              series.push(getSeriesOptions('Max Single Mean (*)', '#EBFF00'));
+
+              lines.push(singleMeanArray);
+              series.push(getSeriesOptions('Single mean', '#FC6333'));
+            }
+
+            if(areThereSomeErrors > 0){
+              lines.push(errorsArray);
+              series.push({
+                showLine:false,
+                markerOptions: { size: 7, style:'x' },
+                label: 'Errors',
+                color: '#FF0000'
+              });
+            }
+
+            var options = {
+              title: {
+                text: data.benchmark[serviceName][routeName]['name'],
+                color: '#F1F1F1'
+              },
+              animate: true,
+              grid: {
+                background: '#000000', textColor: '#F1F1F1'
+              },
+              seriesDefaults:{
+                rendererOptions: {
+                  showDataLabels: true
+                }
+              },
+              highlighter: {
+                show: true,
+                sizeAdjust: 7.5
+              },
+              cursor:{
+                show: true,
+                zoom:true,
+              },
+              legend: {
+                show:true,
+                location: 'se',
+                background: 'rgba(101, 0, 253, 0.89)'
+              },
+              axesDefaults: {
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+              },
+              axes: {
+                xaxis: {
+                  label: 'Samples',
+                  pad: 0
+                },
+                yaxis: {
+                  label: 'Response time (seconds)',
+                  tickOptions: {
+                    formatString:'%.6f'
+                  }
+                }
+              },
+              series: series
+            };
+
+            $.jqplot('chart' + counter, lines, options);
+            counter++;
+          }
+        }
+        hljs.initHighlightingOnLoad();
+        bindButtons();
+      });
+
+      $(function(){
+        var counter = 0;
+        for(serviceName in data.benchmark){
+          for(routeName in data.benchmark[serviceName]){
+            var samples = data.benchmark[serviceName][routeName]['stats']['sample'];
+            var sortedSamples = _.orderBy(samples);
+            var totalDelta = sortedSamples[sortedSamples.length - 1] - sortedSamples[0];
+
+            var bucketCount = ~~Math.min(totalDelta*1000, sortedSamples.length);
+            var delta = totalDelta/bucketCount;
+
+            var buckets = [[sortedSamples[0] + delta/2.0, 0]];
+
+            for (var i = 0; i < samples.length; i++) {
+              var s = sortedSamples[i];
+              while(s > (sortedSamples[0] + buckets.length * delta)) {
+                buckets.push([(sortedSamples[0] + buckets.length * delta + delta/2.0), 0]);
+              }
+              buckets[buckets.length - 1][1]++;
+            }
+
+            buckets = _.map(buckets, function(b){
+              return [b[0], 100*b[1]/samples.length];
+            });
+
+
+            var lines = [buckets],
+                series = [{
+                  showMarker: false,
+                  pointLabels: { show: true },
+                  label: 'Samples',
+                  color: '#6699FF',
+                  rendererOptions: {
+                    smooth: true
+                  }
+                }];
+
+            var options = {
+              title: {
+                text: data.benchmark[serviceName][routeName]['name'],
+                color: '#F1F1F1'
+              },
+              animate: true,
+              grid: {
+                background: '#000000', textColor: '#F1F1F1'
+              },
+              seriesDefaults:{
+                rendererOptions: {
+                  showDataLabels: true
+                }
+              },
+              highlighter: {
+                show: true,
+                sizeAdjust: 7.5
+              },
+              legend: {
+                show:true,
+                location: 'se',
+                background: 'rgba(101, 0, 253, 0.89)'
+              },
+              cursor:{
+                show: true,
+                zoom:true,
+              },
+              axesDefaults: {
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+              },
+              axes: {
+                xaxis: {
+                  label: 'Response time (seconds)',
+                  tickOptions: {
+                    formatString:'%.3f'
+                  }
+                },
+                yaxis: {
+                  label: 'Percent of responses',
+                  tickOptions: {
+                    formatString: '%.1f%'
+                  }
+                }
+              },
+              series: series
+            };
+
+            $.jqplot('distchart' + counter, lines, options);
+            counter++;
+          }
+        }
+        $(".distribution.panel").addClass('hide');
+      });
+    </script>
+  </body>
+</html>
