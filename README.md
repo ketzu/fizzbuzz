@@ -47,6 +47,10 @@ The benchmark also contains a distribution of the response times:
 
 ![Benchmark of /to/100000 as distribution](/benchmark/to100000dist.png)
 
+### Docker
+
+FABI is available as a docker container [through docker-hub](https://hub.docker.com/r/ketzu/fabi) as ```ketzu/fabi```.
+
 ### OpenAPI and Swaggerhub
 
 You can find the FABI example API on [swaggerhub](https://app.swaggerhub.com/apis/ketzu/FABI/1.0).
