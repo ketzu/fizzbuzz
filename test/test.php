@@ -6,9 +6,10 @@ $succeeded = 0;
 $runned = 0;
 
 function testfizzbuzz($expected, $param) {
+	global $failed, $succeeded, $runned;
 	$runned += 1;
 	if(fizzbuzz($param)!=$expected){
-		echo "fizzbuzz(".$param.") != ".$expected;
+		echo "fizzbuzz(".$param.") != ".$expected."\r\n";
 		$failed += 1;
 	}else{
 		$succeeded += 1;
@@ -51,13 +52,13 @@ testfizzbuzz(90,"FizzBuzz");
 testfizzbuzz(1500,"FizzBuzz");
 
 echo "";
-echo $runned." total tests executed.";
+echo $runned." total tests executed.\r\n";
 
 if($failed > 0) {
-	echo $succeeded." test(s) ran successfully.";
-	echo $failed." test(s) failed.";
+	echo $succeeded." test(s) ran successfully.\r\n";
+	echo $failed." test(s) failed.\r\n";
 	return -1;
 }else{
-	echo "All tests succeded.";
+	echo "All tests succeded.\r\n";
 	return 0;
 }
