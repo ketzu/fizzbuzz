@@ -6,7 +6,7 @@
  * Regards, David.
  */
 function fizzbuzz($fb) {
-	if($fb<1){
+	if($fb<1 || !is_numeric($fb)){
 		return "";
 	}else if($fb % 15 == 0){
 		return "FizzBuzz";
