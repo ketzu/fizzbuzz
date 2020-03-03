@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: FizzBuzz Tests
-      uses: franzliedke/gh-action-php@0.2.0
-      run: "php7.4 test/test.php"
+    - name: Checkout
+      uses: actions/checkout@v2  
+    - name: Setup PHP and Run Test
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+      run: "php test/test.php"
