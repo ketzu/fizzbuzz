@@ -5,7 +5,7 @@ $failed = 0;
 $succeeded = 0;
 $runned = 0;
 
-function testfizzbuzz($expected, $param) {
+function testfizzbuzz($param, $expected) {
 	global $failed, $succeeded, $runned;
 	$runned += 1;
 	if(fizzbuzz($param)!=$expected){
