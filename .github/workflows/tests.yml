@@ -9,4 +9,4 @@ jobs:
     steps:
     - name: FizzBuzz Tests
       uses: franzliedke/gh-action-php@0.2.0
-      runs: "php7.4 test/test.php
+      run: "php7.4 test/test.php
