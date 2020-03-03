@@ -8,7 +8,7 @@
 function fizzbuzz($fb) {
 	if($fb<1){
 		return "";
-	}else if($fb % 3 == 0 && $fb % 5 == 0){
+	}else if($fb % 15 == 0){
 		return "FizzBuzz";
 	}else if($fb % 3 == 0){
 		return "Fizz";
