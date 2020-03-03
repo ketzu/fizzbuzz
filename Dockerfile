@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.4-apache
 RUN a2enmod rewrite
-COPY *.php .htaccess /var/www/html/
+COPY src/ /var/www/html/
 EXPOSE 80/tcp
