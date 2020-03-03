@@ -26,14 +26,14 @@ testfizzbuzz(7,7);
 testfizzbuzz(7,7);
 testfizzbuzz(11,11);
 testfizzbuzz(34,34);
-testfizzbuzz(1452,1452);
+testfizzbuzz(1453,1453);
 
 testfizzbuzz(3,"Fizz");
 testfizzbuzz(6,"Fizz");
 testfizzbuzz(9,"Fizz");
 testfizzbuzz(12,"Fizz");
 testfizzbuzz(18,"Fizz");
-testfizzbuzz(71,"Fizz");
+testfizzbuzz(72,"Fizz");
 testfizzbuzz(99,"Fizz");
 
 testfizzbuzz(5,"Buzz");
@@ -57,7 +57,7 @@ echo $runned." total tests executed.\r\n";
 if($failed > 0) {
 	echo $succeeded." test(s) ran successfully.\r\n";
 	echo $failed." test(s) failed.\r\n";
-	return -1;
+	return 255;
 }else{
 	echo "All tests succeded.\r\n";
 	return 0;
