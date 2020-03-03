@@ -15,6 +15,10 @@ function testfizzbuzz($expected, $param) {
 	}
 }
 
+testfizzbuzz("Hello","");
+testfizzbuzz(-4,"");
+testfizzbuzz("","");
+
 testfizzbuzz(2,2);
 testfizzbuzz(4,4);
 testfizzbuzz(7,7);
